@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gimnasio PROG</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#E8EDF1;--surface:#FFFFFF;--ink:#101820;--mute:#5B6773;--line:#D3DAE0;--accent:#2B4BFF;--on-accent:#FFFFFF;--err:#C62828;
+--c-Crossfit:#E2552B;--c-Pilates:#7B4FD6;--c-Funcional:#0E9F8A;--c-PesoLibre:#2B4BFF;--c-Polea:#8A6D00;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F151B;--surface:#19222B;--ink:#EDF1F4;--mute:#97A3AE;--line:#2B3641;--accent:#6F8BFF;--on-accent:#0F151B;--err:#FF8A80;--c-Crossfit:#FF7A52;--c-Pilates:#A98BFF;--c-Funcional:#3CCDB6;--c-PesoLibre:#6F8BFF;--c-Polea:#E0B93A;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F151B;--surface:#19222B;--ink:#EDF1F4;--mute:#97A3AE;--line:#2B3641;--accent:#6F8BFF;--on-accent:#0F151B;--err:#FF8A80;--c-Crossfit:#FF7A52;--c-Pilates:#A98BFF;--c-Funcional:#3CCDB6;--c-PesoLibre:#6F8BFF;--c-Polea:#E0B93A;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:500 16px/1.4 "Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-tap-highlight-color:transparent}
+#app{height:100%;display:flex;flex-direction:column;max-width:640px;margin:0 auto;background:var(--bg)}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px 10px}
+h1{margin:0;font:700 30px/1 "Barlow Condensed","Arial Narrow",sans-serif;letter-spacing:.01em}
+.btn{appearance:none;border:0;border-radius:10px;padding:10px 16px;font:600 15px "Barlow",system-ui,sans-serif;background:var(--accent);color:var(--on-accent);cursor:pointer;min-height:44px}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn.block{width:100%}
+.btn:focus-visible,.tab:focus-visible,.row:focus-visible,input:focus-visible,.seg label:has(input:focus-visible){outline:3px solid var(--accent);outline-offset:2px}
+main{flex:1;overflow-y:auto;padding:4px 16px 20px}
+.row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--surface);border:0;border-left:6px solid var(--bar,var(--line));border-radius:6px;padding:12px 14px;margin-bottom:8px;color:inherit;font:inherit;cursor:pointer}
+.row.static{cursor:default}
+.row .t{flex:1;min-width:0}
+.row b{display:block;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row small{color:var(--mute);font-size:14px}
+.price{font:700 22px "Barlow Condensed","Arial Narrow",sans-serif;white-space:nowrap}
+.empty{padding:36px 8px;color:var(--mute);text-align:center}
+.card{background:var(--surface);border-radius:6px;padding:16px;margin-bottom:10px}
+.kv{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)}
+.kv:last-child{border:0}
+.kv span:first-child{color:var(--mute)}
+nav{display:flex;background:var(--surface);border-top:1px solid var(--line)}
+.tab{flex:1;appearance:none;border:0;background:none;padding:14px 4px;font:600 15px "Barlow",system-ui,sans-serif;color:var(--mute);cursor:pointer;min-height:52px;border-top:3px solid transparent}
+.tab[aria-selected="true"]{color:var(--accent);border-top-color:var(--accent)}
+#veil{position:fixed;inset:0;background:rgba(10,15,20,.55);display:none;z-index:20}
+#veil.on{display:block}
+#sheet{position:fixed;left:0;right:0;bottom:0;margin:0 auto;max-width:640px;max-height:88%;overflow-y:auto;background:var(--surface);border-radius:16px 16px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));z-index:21;display:none}
+#sheet.on{display:block;animation:up .18s ease-out}
+@keyframes up{from{transform:translateY(24px);opacity:.6}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){#sheet.on{animation:none}}
+#sheet h2{margin:0 0 12px;font:700 26px/1.05 "Barlow Condensed","Arial Narrow",sans-serif}
+label.f{display:block;margin:10px 0 4px;font-weight:600;font-size:14px;color:var(--mute)}
+input[type=text],input[type=number]{width:100%;font:500 17px "Barlow",system-ui,sans-serif;padding:11px 12px;border-radius:8px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);min-height:46px}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg label{flex:1;min-width:92px;text-align:center;padding:10px 6px;border:1.5px solid var(--line);border-radius:8px;cursor:pointer;font-weight:600;line-height:1.2}
+.seg label small{display:block;font-weight:500;color:var(--mute)}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label:has(input:checked){border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,transparent)}
+.err{color:var(--err);min-height:22px;margin:8px 0 0;font-weight:600;font-size:14px}
+.total{font:700 44px/1 "Barlow Condensed","Arial Narrow",sans-serif;margin:2px 0 10px}
+.sub{margin:16px 0 8px;font:700 19px "Barlow Condensed","Arial Narrow",sans-serif}
+#toast{position:fixed;left:50%;bottom:calc(72px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-weight:600;font-size:14px;z-index:30;display:none}
+</style>
+</head>
+<body>
+<div id="app">
+  <header><h1 id="titulo">Clientes</h1><button class="btn" id="accion"></button></header>
+  <main id="main"></main>
+  <nav role="tablist" aria-label="Secciones">
+    <button class="tab" role="tab" data-t="clientes">Clientes</button>
+    <button class="tab" role="tab" data-t="maquinaria">Maquinaria</button>
+    <button class="tab" role="tab" data-t="gimnasio">Gimnasio</button>
+  </nav>
+</div>
+<div id="veil"></div>
+<div id="sheet" role="dialog" aria-modal="true"></div>
+<div id="toast" role="status"></div>
+
+<script>
+/* ====== MODELO: port directo de tus clases Java ====== */
+class Entrenamiento {
+  constructor(numero) { this.numero = numero; }
+  get tipo() { return this.constructor.name; }
+}
+class Crossfit  extends Entrenamiento { get costo() { return 20000; } }
+class Funcional extends Entrenamiento { get costo() { return 25000; } }
+class Pilates   extends Entrenamiento { get costo() { return 30000; } }
+const TIPOS = { Crossfit, Pilates, Funcional };
+
+class Cliente {
+  static CUOTA_BASE = 50000;
+  constructor(nombre, dni) { this.nombre = nombre; this.dni = dni; this.listaEntrenamientos = []; }
+  agregarEntrenamiento(e) { this.listaEntrenamientos.push(e); }
+  // recursivo, igual que calcularCostoMensual(int indice)
+  calcularCostoMensual(indice = 0) {
+    if (indice >= this.listaEntrenamientos.length) return Cliente.CUOTA_BASE;
+    return this.listaEntrenamientos[indice].costo + this.calcularCostoMensual(indice + 1);
+  }
+  // recursivo, igual que mostrarListEntrenemientos(int indice), pero devuelve HTML
+  listarEntrenamientos(indice = 0) {
+    if (indice >= this.listaEntrenamientos.length) return "";
+    const e = this.listaEntrenamientos[indice];
+    return `<div class="row static" style="--bar:var(--c-${e.tipo})"><div class="t"><b>${e.tipo}</b><small>N° ${esc(e.numero)}</small></div><div class="price">${$(e.costo)}</div></div>`
+      + this.listarEntrenamientos(indice + 1);
+  }
+}
+
+class Maquinaria { constructor(antiguedad, nombre) { this.antiguedad = antiguedad; this.nombre = nombre; } get tipo() { return this.constructor.name; } }
+class PesoLibre extends Maquinaria {
+  constructor(a, n, pesoTotal) { super(a, n); this.pesoTotal = pesoTotal; }
+  detalle() { return `Peso total: ${this.pesoTotal} kg`; }
+}
+class Polea extends Maquinaria {
+  constructor(a, n, cantidadPolea) { super(a, n); this.cantidadPolea = cantidadPolea; }
+  detalle() { return `Poleas: ${this.cantidadPolea}`; }
+}
+
+class Gimnasio {
+  constructor(nombre, direccion) { this.nombre = nombre; this.direccion = direccion; this.listaClientes = []; this.listaMaquinarias = []; }
+  agregarCliente(c) { this.listaClientes.push(c); }
+  agregarPesoLibre(a, n, p) { this.listaMaquinarias.push(new PesoLibre(a, n, p)); }
+  agregarPolea(a, n, c) { this.listaMaquinarias.push(new Polea(a, n, c)); }
+  buscarClientePorDni(dni) { return this.listaClientes.find(c => c.dni === dni) || null; }
+}
+
+/* ====== CONTROLADOR: validaciones (los if de tu main) ====== */
+const gym = new Gimnasio("PROG", "San Martin 1313");
+const ctrl = {
+  registrarCliente(nombre, dniTxt) {
+    if (!nombre.trim()) throw new Error("El nombre no puede estar vacío.");
+    if (!/^\d+$/.test(dniTxt.trim())) throw new Error("El DNI debe ser un número.");
+    const dni = parseInt(dniTxt, 10);
+    if (gym.buscarClientePorDni(dni)) throw new Error("Ya existe un cliente con ese DNI.");
+    gym.agregarCliente(new Cliente(nombre.trim(), dni));
+  },
+  agregarEntrenamiento(dni, tipo, numero) {
+    const c = gym.buscarClientePorDni(dni);
+    if (!c) throw new Error("No existe un cliente con ese DNI.");
+    if (!TIPOS[tipo]) throw new Error("Tipo de entrenamiento inválido.");
+    if (!numero.trim()) throw new Error("Ingresá el número de entrenamiento.");
+    c.agregarEntrenamiento(new TIPOS[tipo](numero.trim()));
+  },
+  agregarMaquina(tipo, nombre, antig, extra) {
+    if (!nombre.trim()) throw new Error("El nombre no puede estar vacío.");
+    const a = Number(antig), x = Number(extra);
+    if (antig === "" || !Number.isInteger(a) || a < 0) throw new Error("La antigüedad debe ser un número entero.");
+    if (extra === "" || !(x > 0)) throw new Error(tipo === "PesoLibre" ? "Ingresá el peso total." : "Ingresá la cantidad de poleas.");
+    if (tipo === "PesoLibre") gym.agregarPesoLibre(a, nombre.trim(), x);
+    else gym.agregarPolea(a, nombre.trim(), Math.round(x));
+  }
+};
+
+/* ====== PERSISTENCIA (localStorage, por dispositivo) ====== */
+const KEY = "gimnasio-prog-v1";
+function guardar() {
+  try {
+    localStorage.setItem(KEY, JSON.stringify({
+      c: gym.listaClientes.map(c => ({ n: c.nombre, d: c.dni, e: c.listaEntrenamientos.map(e => [e.tipo, e.numero]) })),
+      m: gym.listaMaquinarias.map(m => m instanceof PesoLibre ? ["PesoLibre", m.antiguedad, m.nombre, m.pesoTotal] : ["Polea", m.antiguedad, m.nombre, m.cantidadPolea])
+    }));
+  } catch (e) {}
+}
+function cargar() {
+  try {
+    const raw = localStorage.getItem(KEY); if (!raw) return;
+    const s = JSON.parse(raw);
+    (s.c || []).forEach(o => { const c = new Cliente(o.n, o.d); o.e.forEach(([t, n]) => TIPOS[t] && c.agregarEntrenamiento(new TIPOS[t](n))); gym.agregarCliente(c); });
+    (s.m || []).forEach(([t, a, n, x]) => t === "PesoLibre" ? gym.agregarPesoLibre(a, n, x) : gym.agregarPolea(a, n, x));
+  } catch (e) {}
+}
+
+/* ====== VISTA ====== */
+const $ = n => "$" + Number(n).toLocaleString("es-AR");
+const esc = s => String(s).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+const q = s => document.querySelector(s);
+let tab = "clientes";
+
+function render() {
+  document.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-selected", b.dataset.t === tab));
+  const main = q("#main"), act = q("#accion");
+  main.scrollTop = 0;
+  if (tab === "clientes") {
+    q("#titulo").textContent = "Clientes"; act.style.display = ""; act.textContent = "Nuevo cliente";
+    main.innerHTML = gym.listaClientes.length
+      ? gym.listaClientes.map(c => `<button class="row" data-dni="${c.dni}"><div class="t"><b>${esc(c.nombre)}</b><small>DNI ${c.dni} · ${c.listaEntrenamientos.length} entrenamientos</small></div><div class="price">${$(c.calcularCostoMensual(0))}</div></button>`).join("")
+      : `<div class="empty">Todavía no hay clientes.<br>Tocá “Nuevo cliente” para cargar el primero.</div>`;
+    main.querySelectorAll(".row").forEach(r => r.onclick = () => abrirCliente(parseInt(r.dataset.dni, 10)));
+  } else if (tab === "maquinaria") {
+    q("#titulo").textContent = "Maquinaria"; act.style.display = ""; act.textContent = "Nueva máquina";
+    main.innerHTML = gym.listaMaquinarias.length
+      ? gym.listaMaquinarias.map(m => `<div class="row static" style="--bar:var(--c-${m.tipo})"><div class="t"><b>${esc(m.nombre)}</b><small>${m.tipo === "PesoLibre" ? "Peso libre" : "Polea"} · ${m.detalle()} · ${m.antiguedad} años</small></div></div>`).join("")
+      : `<div class="empty">No hay maquinaria cargada.<br>Tocá “Nueva máquina” para agregar.</div>`;
+  } else {
+    q("#titulo").textContent = "Gimnasio"; act.style.display = "none";
+    const total = gym.listaClientes.reduce((s, c) => s + c.calcularCostoMensual(0), 0);
+    main.innerHTML = `<div class="card"><div class="kv"><span>Nombre</span><b>${esc(gym.nombre)}</b></div><div class="kv"><span>Dirección</span><b>${esc(gym.direccion)}</b></div></div>
+      <div class="card"><div class="kv"><span>Clientes</span><b>${gym.listaClientes.length}</b></div><div class="kv"><span>Máquinas</span><b>${gym.listaMaquinarias.length}</b></div><div class="kv"><span>Cuotas del mes</span><b>${$(total)}</b></div></div>`;
+  }
+}
+
+function abrirSheet(html) { q("#sheet").innerHTML = html; q("#sheet").classList.add("on"); q("#veil").classList.add("on"); }
+function cerrarSheet() { q("#sheet").classList.remove("on"); q("#veil").classList.remove("on"); }
+function aviso(t) { const e = q("#toast"); e.textContent = t; e.style.display = "block"; setTimeout(() => e.style.display = "none", 1800); }
+function intentar(fn, onOk) { try { fn(); guardar(); onOk(); } catch (ex) { q("#err").textContent = ex.message; } }
+
+function formCliente() {
+  abrirSheet(`<h2>Nuevo cliente</h2>
+    <label class="f" for="fn">Nombre</label><input type="text" id="fn" autocomplete="off">
+    <label class="f" for="fd">DNI</label><input type="text" id="fd" inputmode="numeric" autocomplete="off">
+    <p class="err" id="err"></p>
+    <button class="btn block" id="ok">Registrar cliente</button>`);
+  q("#ok").onclick = () => intentar(() => ctrl.registrarCliente(q("#fn").value, q("#fd").value), () => { cerrarSheet(); render(); aviso("Cliente agregado"); });
+}
+
+function abrirCliente(dni) {
+  const c = gym.buscarClientePorDni(dni); if (!c) return;
+  abrirSheet(`<h2>${esc(c.nombre)}</h2>
+    <small style="color:var(--mute)">DNI ${c.dni}</small>
+    <div class="sub">Cuota mensual</div>
+    <div class="total">${$(c.calcularCostoMensual(0))}</div>
+    <div class="kv"><span>Cuota base</span><span>${$(Cliente.CUOTA_BASE)}</span></div>
+    <div class="sub">Historial de entrenamientos</div>
+    ${c.listaEntrenamientos.length ? c.listarEntrenamientos(0) : `<div class="empty" style="padding:12px">No tiene entrenamientos.</div>`}
+    <div class="sub">Agregar entrenamiento</div>
+    <div class="seg">${Object.entries(TIPOS).map(([t, K], i) => `<label><input type="radio" name="tp" value="${t}" ${i === 0 ? "checked" : ""}>${t}<small>${$(new K("").costo)}</small></label>`).join("")}</div>
+    <label class="f" for="fe">Número de entrenamiento</label><input type="text" id="fe" autocomplete="off">
+    <p class="err" id="err"></p>
+    <button class="btn block" id="ok">Agregar entrenamiento</button>`);
+  q("#ok").onclick = () => intentar(
+    () => ctrl.agregarEntrenamiento(dni, q('input[name="tp"]:checked').value, q("#fe").value),
+    () => { render(); abrirCliente(dni); aviso("Entrenamiento agregado"); });
+}
+
+function formMaquina() {
+  abrirSheet(`<h2>Nueva máquina</h2>
+    <div class="seg"><label><input type="radio" name="mt" value="PesoLibre" checked>Peso libre</label><label><input type="radio" name="mt" value="Polea">Polea</label></div>
+    <label class="f" for="mn">Nombre</label><input type="text" id="mn" autocomplete="off">
+    <label class="f" for="ma">Antigüedad (años)</label><input type="number" id="ma" inputmode="numeric" min="0">
+    <label class="f" for="mx" id="lx">Peso total (kg)</label><input type="number" id="mx" inputmode="decimal" min="0">
+    <p class="err" id="err"></p>
+    <button class="btn block" id="ok">Agregar máquina</button>`);
+  document.querySelectorAll('input[name="mt"]').forEach(r => r.onchange = () => q("#lx").textContent = r.value === "PesoLibre" ? "Peso total (kg)" : "Cantidad de poleas");
+  q("#ok").onclick = () => intentar(
+    () => ctrl.agregarMaquina(q('input[name="mt"]:checked').value, q("#mn").value, q("#ma").value, q("#mx").value),
+    () => { cerrarSheet(); render(); aviso("Máquina agregada"); });
+}
+
+document.querySelectorAll(".tab").forEach(b => b.onclick = () => { tab = b.dataset.t; render(); });
+q("#accion").onclick = () => tab === "clientes" ? formCliente() : formMaquina();
+q("#veil").onclick = cerrarSheet;
+document.addEventListener("keydown", e => { if (e.key === "Escape") cerrarSheet(); });
+
+cargar();
+render();
+</script>
+</body>
+</html>
